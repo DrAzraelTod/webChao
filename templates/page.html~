@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>
+      {% block title %}
+        {% if title %}
+          {{ title }}
+        {% else %}
+          G33KY^2 - The Nerd Strikes Back
+        {% endif %}
+      {% endblock %}
+    </title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    {% block rss %}
+      {% for name, url in rss %}
+        <link rel="alternate" type="application/atom+xml" title="{{ name }}" href="{{ url }}">
+      {% endfor %}
+    {% endblock %}
+    {% block css %}
+      {% for url in css %}
+        <link type="text/css" href="{{ url }}" rel="stylesheet">
+      {% endfor %}
+    {% endblock %}
+  </head>
+  <body>
+  <div class="header">
+    {% block header %}
+      <h1>{{ title }}</h1>
+    {% endblock %}
+  </div>
+  <div class="sidebar">
+    {% block sidebar %}
+      <ul class="sidebar_elements">
+        {% block factlinks %}
+          <li>
+            <h4><a href="{% url webchao.fact.views.index %}">Facts</a></h4>
+          </li>
+        {% endblock %}
+
+        <li>
+          <form action="{% url webchao.fact.views.index %}" onsubmit="
+            var text = document.getElementById('searchbox_fact').value;
+            window.location.href = '/fact/'+text;
+            return false;
+          ">
+            <input type="text" id="searchbox_fact" name="fact_text" placeholder="z.B. pyChao">
+            <input type="submit" value="Factsuche">
+          </form>
+        </li>
+        {% block bloglinks %}
+          <h4>
+            <li>
+              <a href="{% url webchao.blog.views.index %}">Blog</a>
+            </li>
+          </h4>
+        {% endblock %}
+        <li>
+          <form action="{% url webchao.blog.views.search %}" onsubmit="
+            var text = document.getElementById('searchbox_blog').value;
+            window.location.href = '/blog/search/'+text;
+            return false;
+          ">
+            <input type="text" id="searchbox_blog" name="q" placeholder="z.B. Dresden">
+            <input type="submit" value="Blogsuche">
+          </form>
+        </li>
+      
+        {% if rss %}
+          <li>
+            <h4>Newsfeeds</h4>
+            <ul class="sublist">
+            {% for name, url in rss %}
+              <li>
+                <a rel="alternate" type="application/atom+xml" title="{{ name }}" href="{{ url }}">{{ name }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+        
+        <li>
+          <h4>Links</h4>
+          <ul class="sublist">
+            <li>
+              <a href="http://webchat.freenode.net?channels=zanzibar%20%23g33ky" target="_blank">
+                IRC-Webchat
+              </a>
+            </li>
+            <li>
+              <a href="http://g33ky.de" target="_blank">
+                g33ky.de
+              </a>
+            </li>
+            <li>
+              <a href="/analog" target="_blank">
+                Statistiken
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    {% endblock %}
+  </div>
+  <div class="content">
+    {% block content %}
+      {% autoescape off %}
+        {{ content }}
+      {% endautoescape %}
+    {% endblock %}
+  </div>
+  <div class="footer">
+    {% block footer %}
+      Dies ist die Seite zu den Sacred-Chao IRC-Bot-Facts. Sacred-Chao ist die offizielle Instanz des pyChao-IRC-Bots, der unter anderem in Freenode #zanzibar zu bewundern ist.
+    {% endblock %}
+  </div>
+  {% block analytics %}
+    {% if analytics %}
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("{{ analytics }}");
+            pageTracker._trackPageview();
+        } catch(err) {}
+      </script>
+    {% endif %}
+  {% endblock %}
+  </body>
+</html>
+

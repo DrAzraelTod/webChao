@@ -1,0 +1,1 @@
+#{{ obj.id }} - {{ obj.fact }}

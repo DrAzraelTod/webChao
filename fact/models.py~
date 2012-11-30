@@ -1,0 +1,36 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.core.urlresolvers import reverse
+import datetime
+
+class Fact(models.Model):
+  fact = models.CharField(max_length=512)
+  nickname = models.CharField(max_length=32)
+  date = models.DateTimeField('date published')
+  channel = models.CharField(max_length=64)
+  referenced = models.ManyToManyField("self", through="FactRelation", symmetrical=False, related_name="referencing")
+  class Meta:
+    db_table = 'fact'
+    get_latest_by = 'date'
+    managed = False
+    ordering = ['?', '-date']
+    verbose_name = 'fact'
+    verbose_name_plural = 'facts'
+  def __unicode__(self):
+    return u'[#%s] <%s> %s' % (self.id, self.nickname, self.fact)
+  def created_today(self):
+    return False#self.date.date() == datetime.date.today()
+  def get_absolute_url(self):
+    return reverse('webchao.fact.views.byId', args=[self.id])
+
+class FactRelation(models.Model):
+  fid = models.ForeignKey(Fact, related_name='referencingRels', db_column='fid')
+  refs = models.ForeignKey(Fact, related_name='referencedRels', db_column='refs')
+  class Meta:
+    db_table= 'fact_rels'
+    managed= False
+    ordering= ['refs']
+    verbose_name= 'Fact-Relation'
+    verbose_name_plural= 'Fact-Relationen'
+

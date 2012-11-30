@@ -1,0 +1,20 @@
+{% extends "page.html" %}
+
+{% block content %}
+  <div class="facts">
+    {% for fact in facts %}
+      {{ fact }}
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% if only_one %}
+  {% else %}
+    {% if count %}
+      {{ max_count }} von insgesammt {{ count }} Facts angezeigt
+    {% else %}
+      Alle zu diesem Filter verfügbaren Facts werden angezeigt
+    {% endif %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,64 @@
+<div class="post">
+  <h2>
+    <a href="{{ post.get_absolute_url }}">
+      {{ post.title|safe }}
+    </a>
+  </h2>
+  <p class="infos">
+    Geschrieben: {{ post.date|date:"d.M.Y h:m" }}
+    von {{ post.author }}
+  </p>
+  <div class="text">
+    {% block text %}
+      {% autoescape off %}
+        {{ post.text|urlizetrunc:25|linebreaks  }}
+      {% endautoescape %}
+    {% endblock %}
+  </div>
+  {% block references %}
+    {% if referenced %}
+      <h3>Antwortet auf</h3>
+      <ul class="referenced">
+        {% for ref_post in referenced %}
+          <li>
+            <a href="{{ ref_post.get_absolute_url }}{{ ref_post.title ]}">
+              {{ ref_post.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if referencing %}
+      <h3>Antworten darauf</h3>
+      <ul class="referencing">
+        {% for ref_post in referencing %}
+          <li>
+            <a href="{{ ref_post.get_absolute_url }}{{ ref_post.title ]}">
+              #{{ ref_post.id }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endblock %}
+</div>
+{% block comments %}
+  {% if comments %}
+    <div class="comments">
+      <h2>Kommentare</h2>
+      {% for comment in comments %}
+        {{ comment.render }}
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if comment_form %}
+    <form action="/blog/comment/{{ post.id }}/" method="POST" class="comment">
+      {{ comment_form.as_p }}
+      <input type="submit" value="Kommentar senden"/>
+      <span style="float: right;">
+        Im Kommentartext kann <a href="http://de.wikipedia.org/wiki/Markdown" target="_blank">Markdown</a> zur Formattierung eingesetzt werden.
+      </span>
+    </form>
+  {% endif %}
+{% endblock %}
+

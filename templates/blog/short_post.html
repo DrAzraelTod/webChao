@@ -1,0 +1,17 @@
+{% extends "blog/post.html" %}
+
+{% block text %}
+  {% autoescape off %}
+    {{ post.text|removetags:"img table tbody"|truncatewords_html:100|urlizetrunc:25|linebreaks  }}
+  {% endautoescape %}
+  <br />
+  <a href="{{ post.get_absolute_url }}">
+    [Artikel vollständig lesen / Kommentare einblenden]
+  </a>
+{% endblock %}
+
+
+{% block references %}
+{% endblock %}
+{% block comments %}
+{% endblock %}

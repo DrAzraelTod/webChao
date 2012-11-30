@@ -1,0 +1,10 @@
+<div>
+  {% autoescape off %}
+    {{ obj.render|urlizetrunc:25|linebreaks }}
+  {% endautoescape %}
+</div>
+<p>
+  <a href="{{ obj.link }}">
+    zum Kommentar
+  </a>
+</p>

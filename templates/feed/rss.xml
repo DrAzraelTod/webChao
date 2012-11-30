@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://feeds2.feedburner.com/~d/styles/itemcontent.css"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+  <atom:link href="{{ self_url }}" rel="self" type="application/rss+xml" />
+    <title>{{ title }}</title>
+    <link>{{ main_link }}</link>
+    <description>{{ description }}</description>
+    <language>de-DE</language>
+    <copyright>{{ copyright }}</copyright>
+    <pubDate>{{ now }}</pubDate>
+    
+    {% for obj in objects %}
+      <item>
+        <title>{{ object.title }}</title>
+        <description>{{ object.description }}</description>
+        <author>{{ object.author }}</author>
+        <guid>{{ object.url }}</guid>
+        <pubDate>{{ object.date }}</pubDate>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>

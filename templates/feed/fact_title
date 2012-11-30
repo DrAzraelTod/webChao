@@ -1,0 +1,1 @@
+Fact #{{ obj.id }} von {{ obj.nickname }} in {{ obj.channel }}

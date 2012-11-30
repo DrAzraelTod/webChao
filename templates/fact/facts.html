@@ -1,0 +1,48 @@
+{% extends "page.html" %}
+
+{% block factlinks %}
+  <li>
+    <h4><a href="{% url webchao.fact.views.index %}">Facts</a></h4>
+  </li>
+  <li>
+    <h4>häufigste Nutzer</h4>
+    {% if authors %}
+      <ul class="sublist">
+        {% for name in authors %}
+          <li>
+            <a href="{% url webchao.fact.views.byNickname fact_nickname=name %}">
+              {{ name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endblock %}
+
+
+{% block content %}
+  <div class="
+    facts
+    {% if only_one %}
+      single_fact
+    {% else %}
+      multiple_facts
+    {% endif %}
+  ">
+    {% for fact in facts %}
+      {{ fact }}
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% if only_one %}
+  {% else %}
+    {% if count %}
+      {{ max_count }} von insgesammt {{ count }} Facts angezeigt
+    {% else %}
+      Alle zu diesem Filter verfügbaren Facts werden angezeigt
+    {% endif %}
+  {% endif %}
+{% endblock %}

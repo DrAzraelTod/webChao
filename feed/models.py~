@@ -1,0 +1,15 @@
+from django.db import models
+from django.contrib.syndication.feeds import Feed
+from webchao.fact.models import Fact
+
+
+class FactFeed(Feed):
+  title = 'Webchao Fact-Feed'
+  link = '/fact/'
+  description = "Die neuesten pyChao-Facts im WWW"
+  def items(self):
+    return Fact.objects.order_by('-date')[:30]
+  def item_title(self, item):
+    return item.fact
+  def item_description(self,item):
+    return item
