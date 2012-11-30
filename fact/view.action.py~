@@ -1,9 +1,0 @@
-from webchao.fact.models import Fact
-
-class viewAction():
-  def byId(self,fact_id):
-    facts = Fact.objects.get(id=fact_id)
-  def byNickname(self, fact_nickname):
-    facts = Fact.objects.filter(nickname=fact_nickname)
-  def byChannel(self, fact_channel):
-    facts = Fact.objects.filter(channel=fact_channel)
