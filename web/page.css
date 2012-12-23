@@ -283,7 +283,8 @@ div.content {
       }
       
           div.content div.facts div.fact p.text a,
-          div.content div.post  div.text a
+          div.content div.post  div.text a,
+	  div.content div.comments div.comment a
           {
             text-decoration: underline;
             text-shadow: 2px 2px 3px #0000A0;
