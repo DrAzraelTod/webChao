@@ -1,0 +1,150 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.contrib.auth.models import User
+import datetime
+from django.core.urlresolvers import reverse
+import re
+from django.template import Context, loader
+
+class Tag(models.Model):
+  name = models.CharField(max_length=128, unique=True)
+  def __unicode__(self):
+    return self.name
+  def get_absolute_url(self):
+    return reverse('webchao.blog.views.byTag', args=[self.name])
+  class Meta:
+    ordering = ['name']
+    verbose_name = 'Tag'
+    verbose_name_plural = 'Tags'
+
+
+class UserProfile(models.Model):
+  user = models.ForeignKey(User, unique=True)
+  nickname = models.CharField(max_length=128)
+  jabber_id = models.EmailField(unique=True)
+  def __unicode__(self):
+    return self.nickname
+  def get_absolute_url(self, byId = False):
+    return reverse('webchao.blog.views.byAuthor', args=[self.user.username])
+
+
+POST_STATUS = (
+  (1,  'gelöscht'),
+  (2,  'Veröffentlichen'),
+  (0,  'Entwurf'),
+)
+
+class Post(models.Model):
+  text = models.TextField('Inhalt')
+  title = models.CharField('Titel', max_length=255)
+  author = models.ForeignKey(UserProfile, related_name="posts")
+  date = models.DateTimeField('veröffentlicht ab')
+  tags = models.ManyToManyField(Tag, symmetrical=False, related_name="posts")
+  status = models.IntegerField('Status', choices=POST_STATUS)
+  # filter what states (__gte) should be displayed public
+  display_states_above = 2
+  def created_today(self):
+    return self.date.date() == datetime.date.today()
+  def get_slug(self):
+    slug = self.title.replace(' ', '-')
+    slug = slug.replace('#', '')
+    return slug
+  def get_absolute_url(self, byId = False):
+    if (byId):
+      return reverse('webchao.blog.views.byId', args=[self.id, self.get_slug()])
+    else:
+      return reverse('webchao.blog.views.byDate', args=[self.date.date().year, self.date.date().month, self.date.date().day, self.get_slug()])
+  def __unicode__(self):
+    return self.title
+  class Meta:
+    get_latest_by = 'date'
+    ordering = ['-date']
+    verbose_name = 'Artikel'
+    verbose_name_plural = 'Artikel'
+
+COMMENT_STATUS = (
+  (7,  'auto-öffentlich'),
+  (6,  'öffentlich'),
+  (2,  'gelöscht'),
+  (1,  'auto-Spam'),
+  (0,  'Spam'),
+)
+
+class Comment(models.Model):
+  authenticated = models.BooleanField()
+  author = models.ForeignKey(UserProfile, blank=True, null=True)
+  text = models.TextField()
+  status = models.IntegerField(choices=COMMENT_STATUS)
+  nickname = models.CharField(max_length=128, blank=True, null=True)
+  email = models.EmailField(blank=True, null=True)
+  ip = models.IPAddressField()
+  url = models.URLField(blank=True, null=True)
+  referenced = models.ForeignKey("self", related_name="referencing", blank=True, null=True, verbose_name="Bezug auf")
+  post = models.ForeignKey(Post, related_name='comments')
+  date = models.DateTimeField('date commented')
+  template = loader.get_template('blog/comment.html')
+  # filter what states (__gte) should be displayed public
+  display_states_above = 6
+
+  class Meta:
+    get_latest_by = 'date'
+    ordering = ['date']
+    verbose_name = 'Kommentar'
+    verbose_name_plural = 'Kommentare'
+  #some kind of poor-mans spamfilter
+  #maybe someday i will be bored enough to compile a list of bad words
+
+  def autodecide_status(self):
+    #Filter based on previous comments with same text
+    blocked = Comment.objects.filter(text=self.text, status__in=[1,0,2]).count()
+    if blocked >= 1:
+      self.status = 1
+      return self.status
+    #Filter based on previous comments, allready moderated by admin
+    blocked = Comment.objects.filter(email=self.email, status=0).count()
+    blocked = blocked+Comment.objects.filter(url=self.url, status=0).count()
+    allowed = Comment.objects.filter(email=self.email, status=6).count()
+    #optimistic aproach: everyone is allowed to post, except he is categorized as spam
+    if (blocked > allowed):
+      self.status = 1
+    else:
+      self.status = 7
+    return self.status
+  #we need to fill a comment from an user-object... maybe via User->UserProfile
+
+  def fill_from_user(self,user):
+    if (user.is_authenticated()):
+      self.authenticated = True
+      try:
+        profile = UserProfile.objects.get(user=user)
+        self.author = profile
+      except:
+        self.nickname = user.username
+        self.url = reverse('webchao.blog.views.byAuthor', args=[user.username])
+      self.email = user.email
+      self.status = 6
+    else:
+      self.authenticated = False
+      self.autodecide_status()
+    self.date = datetime.datetime.now()
+
+  def get_author_nickname(self):
+    if (self.authenticated and not self.nickname):
+      if (self.author.nickname):
+        return self.author.nickname
+      else:
+        return self.author.user.username
+    else:
+      return self.nickname
+
+  def __unicode__(self):
+    return '#%s von %s' % (self.id, self.get_author_nickname())
+
+  def render(self):
+    c = Context({
+      'comment': self,
+      'nickname': self.get_author_nickname(),
+      'references': self.referencing.filter(status__gte=self.display_states_above),
+    })
+    return self.template.render(c)
