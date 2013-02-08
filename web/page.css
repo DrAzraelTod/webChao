@@ -15,14 +15,34 @@ body {
   max-width: 1200px;
   margin: auto;
 }
+h1 {
+  text-shadow: 15px 9px 3px #0000A0;
+  filter:dropshadow(color=#000080,offx2, offy=2);
+}
 
 h1, h2 {
   font-size: 18px;
   /*text-decoration: underline;*/
-  text-shadow: 2px 2px 3px #0000A0;
-  filter:dropshadow(color=#000080,offx2, offy=2);
   font-family: serif;
 }
+  .post h2 a, .fact h2{
+    background-color: rgb(45, 44, 78) !important;
+    display: block;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #00C;
+    background: -moz-linear-gradient(45deg,  #00c 0%, #0d0d0d 46%, #010101 50%, #0a0a0a 53%, #00d 76%, #007 87%, #00a 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#00c), color-stop(46%,#0d0d0d), color-stop(50%,#010101), color-stop(53%,#0a0a0a), color-stop(76%,#00d), color-stop(87%,#007), color-stop(100%,#00a)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  #00c 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#00d 76%,#007 87%,#00a 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  #00c 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#00d 76%,#007 87%,#00a 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  #00c 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#00d 76%,#007 87%,#00a 100%); /* IE10+ */
+    background: linear-gradient(45deg,  #00c 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#00d 76%,#007 87%,#00a 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00c', endColorstr='#00a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  } 
+    .fact h2 a{
+      background: transparent !important;
+    }
 
 h1 {
   /* Rotation */
@@ -97,6 +117,7 @@ div.sidebar {
     
       div.sidebar ul.sidebar_elements li input {
         font-size: 12px;
+	width: 80%;
       }
       
         div.sidebar ul.sidebar_elements li ul.sublist, div.sidebar ul.sidebar_elements li ul.sublist li {
@@ -144,6 +165,7 @@ div.sidebar {
           
           div.sidebar ul.sidebar_elements li ul.sublist li:before {
             content: '►';
+	    float: left;
           }
           div.sidebar ul.sidebar_elements li ul.sublist li:hover:before {
             content: '▻';
@@ -247,7 +269,11 @@ div.content {
           width: 83%;
           border: 2px solid #ffffff;
         }
-        
+
+	div.content form.comment .markdown_support {
+          color: #62F;
+        }
+
         div.content form.comment ul,
         div.content form.comment ul li
         {
@@ -278,9 +304,13 @@ div.content {
       
       div.content div.facts div.fact *,
       div.content div.post  *
-        {
+      {
         background-color: #000000;
       }
+        div.content div.post .infos {
+          color: #62F;
+          font-size: 10px;
+        }
       
           div.content div.facts div.fact p.text a,
           div.content div.post  div.text a,
