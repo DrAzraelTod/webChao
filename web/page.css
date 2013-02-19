@@ -68,7 +68,35 @@ a {
   a:hover{
     text-decoration: underline;
   }
+blockquote {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border: dotted #00A000;
+    padding: 5px;
+}
 
+pre code::nth-line(n)::before, 
+code pre::nth-line(n)::before {
+  content: counter(line) ". ";
+  color: #999;
+}
+code, pre {
+/*  counter-reset: linenumbers;*/
+  background: #000;
+  color: #3F3;
+  font-family: monospace;
+}
+/*pre code:before, code pre:before {
+    color: #aaa;
+    content: counter(linenumbers);
+    counter-increment: linenumbers;
+    left: -3ex;
+    position: absolute;
+    text-align: right;
+    width: 2.5ex;
+}
+*/
 .clickable {
   cursor: pointer;
 }
@@ -204,14 +232,20 @@ div.content {
   
   div.content div.multiple_facts {
      /* 2 Spalten */
-    -moz-column-count: 2;
+//    -moz-column-count: 2;
     -moz-column-gap: 10px;
-    -webkit-column-count: 2;
+//   -webkit-column-count: 2;
     -webkit-column-gap: 10px;
-    column-count: 2;
+//    column-count: 2;
     column-gap: 10px;
     -webkit-column-break-inside: avoid;
+    column
   }
+  div.content div.multiple_facts .fact {
+    display: inline-block !important;
+    max-width: 250px;
+    vertical-align: top;
+   }
 
     div.content div.facts div.fact,
     div.content div.post,
