@@ -10,5 +10,5 @@ urlpatterns = patterns('webchao.blog.views',
   (r'^search/$', 'search'),
   (r'^author/(?P<username>[a-zA-Z_0-9]*)/.*$', 'byAuthor'),
   (r'^comment/(?P<post_id>\d+)/(?P<param_string>.*)$', 'writeComment'),
-  (r'^list*$', 'biglist'),
+  (r'^list/?$', 'biglist'),
 )

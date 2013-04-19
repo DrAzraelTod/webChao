@@ -15,7 +15,7 @@ short_post_template = loader.get_template('blog/short_post.html')
 micro_post_template = loader.get_template('blog/micro_post.html')
 post_template = loader.get_template('blog/post.html')
 
-
+global page_limit
 page_limit = 50
 
 def biglist(request):
@@ -25,6 +25,8 @@ def biglist(request):
   return renderSomething(all_posts, request)
 
 def index(request):
+  global page_limit
+  page_limit = 50
   all_posts = Post.objects.order_by('-date')
   return renderSomething(all_posts, request)
 
