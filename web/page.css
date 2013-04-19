@@ -345,6 +345,10 @@ div.content {
           color: #62F;
           font-size: 10px;
         }
+	  div.content div.post .infos .author {
+             font-size: 14px;
+             color: #84F;
+          }
       
           div.content div.facts div.fact p.text a,
           div.content div.post  div.text a,
@@ -397,6 +401,25 @@ div.content {
         div.content div.comments div.comment:hover > p.infos {
           border-color: #00A000;
         }
+
+  div.content ul.postlist {
+  }
+    div.content ul.postlist li.micro_post {
+    }
+      div.content ul.postlist li.micro_post span.title {
+        font-size: 18px;
+      }
+      div.content ul.postlist li.micro_post span.infos {
+        font-size: 10px;
+        color: #ccc;
+        float: right;
+      }
+        div.content ul.postlist li.micro_post span.infos span.author {
+          min-width: 120px;
+          display: inline-block;
+          margin-left: 50px;
+        }
+
 
 div.footer, div.header{
   display: block;

@@ -1,0 +1,10 @@
+{% extends "blog/post.html" %}
+
+{% block text %}
+  {% autoescape off %}
+    {{ post.text|truncatewords:100|urlizetrunc:25 }}
+  {% endautoescape %}
+{% endblock %}
+
+{% block comments %}
+{% endblock %}

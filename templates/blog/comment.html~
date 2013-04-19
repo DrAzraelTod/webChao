@@ -1,0 +1,32 @@
+<div class="comment" id="comment_{{ comment.id }}">
+  <p class="infos">
+    <a href="#comment_{{ comment.id }}">#{{ comment.id }}</a>:
+    {{ comment.date|date:"d.M.Y h:m" }}
+    von
+    {% if comment.authenticated and comment.author %}
+      <a href="{{ comment.author.get_absolute_url }}">
+        {{ nickname }}
+      </a>
+    {% else %}
+      {% if comment.url %}
+        <a href="{{ comment.url }}" target="_blank">
+          {{ nickname }}
+        </a>
+      {% else %}
+        {{ nickname }}
+      {% endif %}
+    {% endif %}
+    
+  </p>
+  {{comment.text}}
+  
+  {% if references %}
+    <ul class="referencing_comments">
+      {% for ref in references %}
+        <li>
+          {{ ref.render }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

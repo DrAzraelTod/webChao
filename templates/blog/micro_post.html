@@ -1,0 +1,12 @@
+<li class="micro_post">
+  <span class="title">
+    <a href="{{ post.get_absolute_url }}">
+      {{ post.title|safe }}
+    </a>
+  </span>
+  <span class="infos">
+    {{ post.date|date:"d.M.Y h:m" }}
+    <span class="author">{{ post.author }}</span>
+  </span>
+</li>
+

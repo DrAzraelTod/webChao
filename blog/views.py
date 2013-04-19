@@ -12,10 +12,17 @@ import datetime
 
 blog_template = loader.get_template('blog/blog.html')
 short_post_template = loader.get_template('blog/short_post.html')
+micro_post_template = loader.get_template('blog/micro_post.html')
 post_template = loader.get_template('blog/post.html')
 
 
-page_limit = 10
+page_limit = 50
+
+def biglist(request):
+  global page_limit
+  page_limit = 0
+  all_posts = Post.objects.order_by('-date')
+  return renderSomething(all_posts, request)
 
 def index(request):
   all_posts = Post.objects.order_by('-date')
@@ -76,7 +83,6 @@ def renderBlog(content, title = ''):
   return HttpResponse(blog_template.render(c))
 
 def renderSomething(posts, request):
-
   # Anzahl feststellen, Eingabewerte filtern
   if (isinstance(posts,list)):
     count = len(posts)
@@ -106,11 +112,21 @@ def renderSomething(posts, request):
 
 def renderPosts(posts):
   ret = ''
-  for p in posts[:page_limit]:
+  if (page_limit == 0):
+    ret +='<ul class="postlist">'
+  temp = posts
+  if (page_limit > 0):
+    temp = posts[:page_limit]
+  for p in temp:
     c = Context({
       'post': p
     })
-    ret += short_post_template.render(c)
+    if (page_limit > 0):
+      ret += short_post_template.render(c)
+    else:
+      ret += micro_post_template.render(c)
+  if (page_limit == 0):
+    ret += '</ul>'
   return ret
 
 def renderSinglePost(post, request):
