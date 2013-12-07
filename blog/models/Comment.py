@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from webchao.blog.settings import *
 import datetime
+import re
+from collections import *
 
 
 COMMENT_STATUS = (
@@ -69,6 +71,9 @@ class Comment(models.Model):
 #    referer = request.META.get('HTTP_REFERER', '')
 #    if (referer == u"-"):
 #      raise PermissionDenied()
+    c = Counter(re.findall(r"href=",self.text.lower()))
+    if c['href='] >= 6:
+      raise PermissionDenied()
     return self.status
   #we need to fill a comment from an user-object... maybe via User->UserProfile
 
