@@ -10,6 +10,7 @@ from django.core.exceptions import PermissionDenied
 from webchao.blog.settings import *
 import datetime
 import re
+import codecs
 from collections import *
 
 
@@ -64,13 +65,23 @@ class Comment(models.Model):
       else:
         self.status = 6
         return self.status
-    fh = open(SPAMFILTER_URLS)
+    fh = codecs.open(SPAMFILTER_URLS,encoding='utf-8')
     for line in fh.readlines():
       if (line[:-1] in self.url):
         raise PermissionDenied()
 #    referer = request.META.get('HTTP_REFERER', '')
 #    if (referer == u"-"):
 #      raise PermissionDenied()
+    fh = codecs.open(SPAMFILTER_WORDS,encoding='utf-8')
+    text_count = 0
+    name_count = 0
+    for line in fh.readlines():
+      if (line[:-1] in self.text):
+        text_count += 1
+      if (line[:-1] in self.nickname):
+        name_count += 1
+    if (name_count >= SPAMFILTER_WORDS_NAME_MAX or text_count >= SPAMFILTER_WORDS_TEXT_MAX):
+      raise PermissionDenied()
     c = Counter(re.findall(r"href=",self.text.lower()))
     if c['href='] >= 6:
       raise PermissionDenied()
