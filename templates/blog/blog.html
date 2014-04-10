@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block header %}
-  <h1 class="clickable" onclick="document.location.href='{% url webchao.blog.views.index %}'">
+  <h1 class="clickable" onclick="document.location.href='{% url "webchao.blog.views.index" %}'">
     G33KY^2 - The Nerd Strikes Back
   </h1>
   <h2>
@@ -28,10 +28,10 @@
 
 {% block bloglinks %}
   <li>
-    <h4><a href="{% url webchao.blog.views.index %}">Blog</a></h4>
+    <h4><a href="{% url "webchao.blog.views.index" %}">Blog</a></h4>
   </li>
   <li>
-    <h4><a href="{% url webchao.blog.views.index %}">neueste Artikel</a></h4>
+    <h4><a href="{% url "webchao.blog.views.index" %}">neueste Artikel</a></h4>
     {% if last_posts %}
       <ul class="sublist">
         {% for post in last_posts %}
@@ -51,7 +51,7 @@
       {% for author in authors %}
         {% if author.nickname %}
           <li>
-            <a href="{% url webchao.blog.views.byAuthor username=author.user.username %}">
+            <a href="{% url "webchao.blog.views.byAuthor" username=author.user.username %}">
               <!-- <img
                 class="im_status_img"
                 src="http://www.IMStatusCheck.com/status/gtalk/{{ author.jabber_id }}"
@@ -71,5 +71,5 @@
 {% endblock %}
 
 {% block footer %}
-  <span><a href="{% url webchao.blog.views.biglist %}">Alle Beiträge</a> unterliegen der Creative-Commons Lizenz CC-BY-SA</span>
+  <span><a href="{% url "webchao.blog.views.biglist" %}">Alle Beiträge</a> unterliegen der Creative-Commons Lizenz CC-BY-SA</span>
 {% endblock %}

@@ -85,6 +85,8 @@ class Comment(models.Model):
     c = Counter(re.findall(r"href=",self.text.lower()))
     if c['href='] >= 6:
       raise PermissionDenied()
+    if len(re.findall(r"https?://",self.text.lower())) > 10:
+      raise PermissionDenied()
     return self.status
   #we need to fill a comment from an user-object... maybe via User->UserProfile
 

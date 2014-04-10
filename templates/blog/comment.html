@@ -23,7 +23,7 @@
     {% endif %}
     
   </p>
-  {{comment.text|markdown:"safe"|urlizetrunc:25}}
+  {{comment.text|striptags|markdown:"nl2br" | safe|  urlizetrunc:25 }}
   
   {% if references %}
     <ul class="referencing_comments">

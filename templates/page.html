@@ -42,12 +42,12 @@
       <ul class="sidebar_elements">
         {% block factlinks %}
           <li>
-            <h4><a href="{% url webchao.fact.views.index %}">Facts</a></h4>
+            <h4><a href="{% url "webchao.fact.views.index" %}">Facts</a></h4>
           </li>
         {% endblock %}
 
         <li>
-          <form action="{% url webchao.fact.views.index %}" onsubmit="
+          <form action="{% url "webchao.fact.views.index" %}" onsubmit="
             var text = document.getElementById('searchbox_fact').value;
             window.location.href = '/fact/'+text;
             return false;
@@ -60,13 +60,13 @@
         {% block bloglinks %}
           <h4>
             <li>
-              <a href="{% url webchao.blog.views.index %}">Blog</a>
+              <a href="{% url "webchao.blog.views.index" %}">Blog</a>
             </li>
           </h4>
         {% endblock %}
 
         <li>
-          <form action="{% url webchao.blog.views.search %}" onsubmit="
+          <form action="{% url "webchao.blog.views.search" %}" onsubmit="
             var text = document.getElementById('searchbox_blog').value;
             window.location.href = '/blog/search/'+text;
             return false;

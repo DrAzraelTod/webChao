@@ -2,7 +2,7 @@
 
 {% block factlinks %}
   <li>
-    <h4><a href="{% url webchao.fact.views.index %}">Facts</a></h4>
+    <h4><a href="{% url "webchao.fact.views.index" %}">Facts</a></h4>
   </li>
   <li>
     <h4>häufigste Nutzer</h4>
@@ -10,7 +10,7 @@
       <ul class="sublist">
         {% for name in authors %}
           <li>
-            <a href="{% url webchao.fact.views.byNickname fact_nickname=name %}">
+            <a href="{% url "webchao.fact.views.byNickname" fact_nickname=name %}">
               {{ name }}
             </a>
           </li>

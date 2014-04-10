@@ -1,11 +1,11 @@
 <div class="fact">
   <h2>
     Fact
-    <a href="{% url webchao.fact.views.byId fact_id=fact.id %}">
+    <a href="{% url "webchao.fact.views.byId" fact_id=fact.id %}">
       #{{ fact.id }}
     </a>
     von
-    <a href="{% url webchao.fact.views.byNickname fact_nickname=fact.nickname %}">
+    <a href="{% url "webchao.fact.views.byNickname" fact_nickname=fact.nickname %}">
       {{ fact.nickname }}
     </a>
   </h2>
@@ -25,11 +25,11 @@
     <ul class="referenced">
       {% for ref_fact in referenced %}
         <li>
-          <a href="{% url webchao.fact.views.byId fact_id=ref_fact.id %}">
+          <a href="{% url "webchao.fact.views.byId" fact_id=ref_fact.id %}">
             #{{ ref_fact.id }}
           </a>
           von
-          <a href="{% url webchao.fact.views.byNickname fact_nickname=ref_fact.nickname %}">
+          <a href="{% url "webchao.fact.views.byNickname" fact_nickname=ref_fact.nickname %}">
             {{ ref_fact.nickname}}
           </a>
         </li>
@@ -41,11 +41,11 @@
     <ul class="referencing">
       {% for ref_fact in referencing %}
         <li>
-          <a href="{% url webchao.fact.views.byId fact_id=ref_fact.id %}">
+          <a href="{% url "webchao.fact.views.byId" fact_id=ref_fact.id %}">
             #{{ ref_fact.id }}
           </a>
           von
-          <a href="{% url webchao.fact.views.byNickname fact_nickname=ref_fact.nickname %}">
+          <a href="{% url "webchao.fact.views.byNickname" fact_nickname=ref_fact.nickname %}">
             {{ ref_fact.nickname}}
           </a>
         </li>

@@ -7,7 +7,7 @@ from webchao.blog.models import *
 class CommentForm(forms.ModelForm):
   class Meta:
     model = Comment
-    fields = ('text')
+    fields = ('text',)
   referenced = forms.ModelChoiceField(
     queryset = Comment.objects.filter(
       status__gte=Post.display_states_above,

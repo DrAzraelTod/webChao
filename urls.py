@@ -3,7 +3,8 @@
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.conf.urls.defaults import *
-from django.views.generic.simple import redirect_to
+#from django.views.generic.simple import redirect_to
+from django.views.generic import RedirectView
 
 admin.autodiscover()
 
@@ -52,6 +53,10 @@ urlpatterns = patterns('',
   # Statisches Zeugs
   ####################
   (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/dat/webchao/web'}),
-  (r'^[Hh][oO][cC][hH][zZ][eE][iI][tT]/?$', redirect_to, {'url': 'https://www.dropbox.com/sh/dbe6t0czpnqwct4/yYys74ZWP5'}),
-  (r'^dropbox/?$', redirect_to, {'url':'http://db.tt/xpxZO66'}),
+#  (r'^[Hh][oO][cC][hH][zZ][eE][iI][tT]/?$', redirect_to, {'url': 'https://www.dropbox.com/sh/dbe6t0czpnqwct4/yYys74ZWP5'}),
+#  (r'^dropbox/?$', redirect_to, {'url':'http://db.tt/xpxZO66'}),
+#  (r'^[Gg][eE][bB][uU][rR][tT][sS][tT][aA][gG]/?$', redirect_to, {'url': 'http://doodle.com/agzc5qi5gbavdcuz'}),
+   (r'^[Hh][oO][cC][hH][zZ][eE][iI][tT]/?$', RedirectView.as_view(url='https://www.dropbox.com/sh/dbe6t0czpnqwct4/yYys74ZWP5')),
+   (r'^dropbox/?$', RedirectView.as_view(url='http://db.tt/xpxZO66')),
+   (r'^[Gg][eE][bB][uU][rR][tT][sS][tT][aA][gG]/?$', RedirectView.as_view(url='http://doodle.com/agzc5qi5gbavdcuz')),
 )

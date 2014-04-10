@@ -1,4 +1,5 @@
-from django.contrib.syndication.feeds import Feed
+#from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed, RssUserland091Feed, Rss201rev2Feed
 from webchao.fact.models import Fact
 from webchao.blog.models import Post, Comment
@@ -19,7 +20,7 @@ class FactFeed(Feed):
     return item.fact
   def item_description(self,item):
     return item
-    
+
 class BlogFeed(Feed):
   title = 'G33KY^2 - The Nerd Strikes Back'
   link = '/fact/'

@@ -1,7 +1,7 @@
 {{ obj|safe }}
 <br />
 <br />
-von <a href="{% url webchao.fact.views.byNickname fact_nickname=obj.nickname %}">&lt;{{ obj.nickname }}&gt;</a><br />
+von <a href="{% url "webchao.fact.views.byNickname" fact_nickname=obj.nickname %}">&lt;{{ obj.nickname }}&gt;</a><br />
 in {{ obj.channel }} geschrieben
 {% if obj.date %}
 , {{ obj.date|date:"d.M.Y h:m" }}<br />
