@@ -52,5 +52,6 @@
       {% endfor %}
     </ul>
   {% endif %}
+  <span id="isso-thread" data-isso-id="{% url "webchao.fact.views.byId" fact_id=fact.id %}" data-title="Fact #{{ fact.id }}"></span>
 </div>
 
