@@ -60,5 +60,5 @@
       </span>
     </form>
   {% endif %}
-<section id="isso-thread" data-title="{{ post.title|safe }}" data-isso-id="{{ post.get_absolute_url }}"></section>
+<section id="isso-thread" data-title="{{ post.title|safe }}" data-isso-id="blog/{{ post.id }}"></section>
 {% endblock %}
