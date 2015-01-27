@@ -12,6 +12,7 @@
     </title>
     <meta name="google-site-verification" content="B6MaEj7cI5qPv_eob0tqxsLPsOFemgt4hiprOlOsCV4" />
     <meta name="google-site-verification" content="BI14LTIO_j3Y6oMo62dKpsmRgsKWFFeESetfE-Ti8J8" />
+    <meta name=viewport content="width=device-width, initial-scale=1">
     <link rel="openid.server" href="https://www.google.com/accounts/o8/site-xrds?hd=g33ky.de" />
     <link rel="openid.delegate" href="https://www.google.com/accounts/o8/site-xrds?hd=g33ky.de" />
     <link rel="openid2.provider" href="https://www.google.com/accounts/o8/ud" />
@@ -34,18 +35,19 @@
     {% endblock %}
     {% block header_additional %}
     {% endblock %}
-    <script data-isso="/isso/" data-isso-css="true" data-isso-lang="de" data-isso-reply-to-self="false" data-isso-max-comments-top="10" data-isso-max-comments-nested="5" data-isso-reveal-on-click="5" data-isso-avatar="true" data-avatar-bg="#f0f0f0" data-avatar-fg="#9abf88 #5698c4 #e279a3 #9163b6 ..." src="/isso/js/embed.min.js"></script>
+    <script data-isso="/isso/" data-isso-css="true" data-isso-lang="de" data-isso-reply-to-self="false" data-isso-max-comments-top="10" data-isso-max-comments-nested="5" data-isso-reveal-on-click="5" data-isso-avatar="true" data-avatar-bg="#f0f0f0" data-avatar-fg="#9abf88 #5698c4 #e279a3 #9163b6 ..." src="/isso/js/embed.min.js" async></script>
   </head>
-  <body>
+  <body onload="var h=document.location.hash; h=h.replace('#',''); if(h.lenght<1){h = 'content'; var e=document.getElementById(h); e.scrollIntoView();}">
   <div class="header">
     <img src="/static/images/qr.png" alt="QR-Code mit Personeninformationen" title="Enthällt VCard zu Dr. Azrael Tod, mit Telefon o.ä, einlesen" id="qrcode" />
     {% block header %}
       <h1>{{ title }}</h1>
     {% endblock %}
   </div>
-  <div class="sidebar">
+  <div class="sidebar" id="sidebar_menu">
+    <a class="button open_menu" id="open_menu" href="#sidebar_menu" onclick="var s = document.getElementsByClassName('sidebar_elements')[0]; if (s.style.display != 'inherit') { s.style.display = 'inherit'} else { s.style.display = 'none' };"><span class="inner"></span></a>
     {% block sidebar %}
-      <ul class="sidebar_elements">
+      <ul class="sidebar_elements"´>
         {% block factlinks %}
           <li>
             <h4><a href="{% url "webchao.fact.views.index" %}">Facts</a></h4>
@@ -115,7 +117,7 @@
       </ul>
     {% endblock %}
   </div>
-  <div class="content">
+  <div class="content" id="content">
     {% block content %}
       {% autoescape off %}
         {{ content }}
@@ -145,4 +147,3 @@
   {% endblock %}
   </body>
 </html>
-
