@@ -8,6 +8,13 @@
     Geschrieben: {{ post.date|date:"d.M.Y h:m" }}
     <span class="author">von {{ post.author }}</span>
   </p>
+  <div class="tags">Tags:
+    <ul class="tags">
+      {% for tag in post.tags.all %}
+        <li><a href="/blog/tag/{{tag.name}}" title="Andere Artikel mit diesem Tag">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
   <div class="text">
     {% block text %}
       {% autoescape off %}
