@@ -587,3 +587,35 @@ div.imagebox {
     display: none;
   }
 }
+
+
+/* new galleries */
+
+ul.gallery {
+	list-style-type: none;
+	clear: left;
+	display: block;
+}
+
+	ul.gallery br {
+		display: none;
+	}
+	ul.gallery > li {
+		display: block;
+		min-width: 200px;
+		width: calc(100%/3);
+		float: left;
+		clear: none;
+	}
+		ul.gallery > li > .info {
+			text-align: center;
+			display: block;
+			width: 100%;
+			margin-bottom: 1em;
+		}
+			ul.gallery > li > .info a.big {
+				text-decoration: none !important;
+			}
+				ul.gallery > li > .info a.big:hover {
+					text-decoration: underline !important;
+				}
