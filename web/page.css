@@ -530,6 +530,10 @@ div.imagebox {
   background: none !important;
 }
 
+#isso-root .text a {
+  text-decoration: underline;
+}
+
 @media (max-width: 710px) {
   body a {
     min-height: 60px !important;
