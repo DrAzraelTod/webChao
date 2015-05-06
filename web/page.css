@@ -623,3 +623,8 @@ ul.gallery {
 				ul.gallery > li > .info a.big:hover {
 					text-decoration: underline !important;
 				}
+	ul.gallery:after {
+		display: block;
+		content: '';
+		clear: left;
+	}
